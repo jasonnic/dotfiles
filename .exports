@@ -1,0 +1,43 @@
+# Make vim the default editor
+export EDITOR="vim"
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
+# Make some commands not show up in history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# Prefer US English and use UTF-8
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_md="$ORANGE"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Always enable colored `grep` output
+export GREP_OPTIONS="--color=auto"
+
+# Link Homebrew casks in `/Applications` rather than `~/Applications`
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export M2=/usr/local/apache-maven/apache-maven-3.1.0/bin
+export MAVEN_OPTS="-Xms256m -Xmx512m"
+export PATH=$M2:$PATH
+export EDITOR='subl -w'
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export EC2_HOME=/usr/local/ec2-api-tools
+export AWS_AUTO_SCALING_HOME=/usr/local/AutoScaling-1.0.61.2
+export AWS_CREDENTIAL_FILE=/Users/jasonnichols/keys/myCredentialFile
+export AWS_ACCESS_KEY=AKIAIX2RHKB72PCO66BA
+export AWS_SECRET_KEY=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
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+export PATH=/usr/local/bin:$PATH:~/bin:/Development/android-sdk-macosx/platform-tools:/Development/android-sdk-macosx/tools
+#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current
+
+PATH=$AWS_AUTO_SCALING_HOME/bin:$EC2_HOME/bin:$PATH
+export PATH

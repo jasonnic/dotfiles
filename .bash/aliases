@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+# Clear all aliases
+unalias -a
+
+if [ "$MACHINE" == "OSX" ] && [ -d /usr/local/.git ] ; then
+  brew_prefix=/usr/local
+  source $HOME/.bash/brew_aliases
+  unalias printf # leave it at the system one
+fi
+
+
+## -----------------------
+## --  Set up aliases --
+## -----------------------
+
+# Safety
+alias rm="rm -i"
+alias mv="mv -i"
+alias cp="cp -i"
+set -o noclobber
+
+# Listing, directories, and motion
+alias ll="ls -alrtF --color"
+alias la="ls -A"
+alias l="ls -CF"
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias m='less'
+alias ..='cd ..'
+alias ...='cd ..;cd ..'
+alias md='mkdir'
+alias cl='clear'
+alias du='du -ch --max-depth=1'
+alias treeacl='tree -A -C -L 2'
+
+# Text and editor commands
+alias em='emacs -nw'     # No X11 windows
+alias eqq='emacs -nw -Q' # No config and no X11
+
+# node.js and nvm
+# http://nodejs.org/api/repl.html#repl_repl
+alias node="env NODE_NO_READLINE=1 rlwrap node"
+alias node_repl="node -e \"require('repl').start({ignoreUndefined: true})\""
+
+
+export NODE_DISABLE_COLORS=1
+if [ -s ~/.nvm/nvm.sh ]; then
+    NVM_DIR=~/.nvm
+    source ~/.nvm/nvm.sh
+    nvm use v0.10.12 &> /dev/null # silence nvm use; needed for rsync
+fi
+
+
+# Less
+export LESS="-eFXir"                 # -r means 'show raw ctrl chars' -- makes output colored
+alias more=less
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias whois="whois -h whois-servers.net"
+
+# Flush Directory Service cache
+alias flush="dscacheutil -flushcache"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Start an HTTP server from a directory
+alias server="open http://localhost:8080/ && python -m SimpleHTTPServer 8080"
+
+
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw'
+
+# grep options
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;31' # green for matches
+
+# sort options
+# Ensures cross-platform sorting behavior of GNU sort.
+# http://www.gnu.org/software/coreutils/faq/coreutils-faq.html#Sort-does-not-sort-in-normal-order_0021
+unset LANG
+export LC_ALL=POSIX
